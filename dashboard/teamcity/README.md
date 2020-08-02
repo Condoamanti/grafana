@@ -1,4 +1,4 @@
-# grafana_dashboard_teamcity
+# TeamCity Dashboard
 Grafana dashboard configuration for TeamCity metrics
 
 ### ***Requirements:***
@@ -25,7 +25,7 @@ Grafana dashboard configuration for TeamCity metrics
 - jvm_threads_number
 
 ### ***Collector Configuration:***
-- [/opt/prometheus/prometheus.yml](https://raw.githubusercontent.com/Condoamanti/grafana_dashboard_teamcity/master/opt/prometheus/prometheus.yml)
+- [/opt/prometheus/prometheus.yml](https://github.com/Condoamanti/grafana/blob/master/dashboard/teamcity/opt/prometheus/prometheus.yml)
 
 ```
   - job_name: "teamcity"
@@ -38,4 +38,4 @@ Grafana dashboard configuration for TeamCity metrics
     bearer_token: "<SCRUBBED>"
 ```
 ### ***GitHub Repository:***
-- [https://github.com/Condoamanti/grafana_dashboard_teamcity](https://github.com/Condoamanti/grafana_dashboard_teamcity)
+- [https://github.com/Condoamanti/grafana_dashboard_teamcity](https://github.com/Condoamanti/grafana/tree/master/dashboard/teamcity)
