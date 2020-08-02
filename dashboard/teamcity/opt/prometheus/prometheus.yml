@@ -1,0 +1,28 @@
+# The global configuration specifies parameters that are valid in all other configuration contexts. They also serve as defaults for other configuration sections.
+global:
+  scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  scrape_timeout:      10s # How long until a scrape request times out.
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets:
+      # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+# A list of scrape configurations.
+scrape_configs:
+  - job_name: "teamcity"
+    metrics_path: "/app/metrics"
+    scheme: https
+    static_configs:
+    - targets: ['teamcity.domain.local']
+    tls_config:
+      insecure_skip_verify: true
+    bearer_token: "<SCRUBBED>"
