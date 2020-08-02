@@ -38,4 +38,4 @@ Grafana dashboard configuration for TeamCity metrics
     bearer_token: "<SCRUBBED>"
 ```
 ### ***GitHub Repository:***
-- [https://github.com/Condoamanti/grafana_dashboard_teamcity](https://github.com/Condoamanti/grafana/tree/master/dashboard/teamcity)
+- [https://github.com/Condoamanti/grafana/tree/master/dashboard/teamcity](https://github.com/Condoamanti/grafana/tree/master/dashboard/teamcity)
