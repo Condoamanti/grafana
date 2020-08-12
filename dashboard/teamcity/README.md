@@ -25,7 +25,7 @@ Grafana dashboard configuration for TeamCity metrics
 - jvm_threads_number
 
 ### ***Collector Configuration:***
-- [/opt/prometheus/prometheus.yml](https://github.com/Condoamanti/grafana/blob/master/dashboard/teamcity/opt/prometheus/prometheus.yml)
+- [/opt/prometheus/prometheus.yml](opt/prometheus/prometheus.yml)
 
 ```
   - job_name: "teamcity"
