@@ -1,0 +1,227 @@
+---
+# ConfigMap Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-apc-ups-telegraf-config
+  namespace: apc
+  labels:
+    app: apc-telegraf
+data:
+  telegraf-apc-ups.conf: |-
+    # Telegraf Configuration
+    ######################################################
+    [agent]
+      interval = "10s"
+      round_interval = true
+    ######################################################
+    [[outputs.influxdb]]
+        urls = ["my-influxdb.example.com:8086"]
+        database = "apc-smartups"
+        insecure_skip_verify = true
+        #ssl_ca = "/usr/local/etc/telegraf.ca"
+    ######################################################
+    ## INPUT CONFIGURATION
+    ### Retrieves details via SNMP from APC Smart-UPS (SMT1500R2X180)
+    ### Extra MIBs required:
+    ### - https://download.schneider-electric.com/files?p_enDocType=Firmware+-+Released&p_Doc_Ref=APC_POWERNETMIB_432&p_File_Name=powernet432.mib
+    ######################################################
+    [[inputs.snmp]]
+      # List of agents to poll
+      agents = ["my-apc-smartups.example.com"]
+      # Polling interval
+      interval = "60s"
+      # Timeout for each SNMP query.
+      timeout = "10s"
+      # Number of retries to attempt within timeout.
+      retries = 3
+      # SNMP version
+      version = 2
+      # SNMP community string.
+      community = "public"
+      # Measurement name
+      name = "snmp.UPS"
+    ######################################################
+    ## System Details
+    #  System name (hostname)
+      [[inputs.snmp.field]]
+      is_tag = true
+      name = "sysName"
+      oid = "RFC1213-MIB::sysName.0"
+    #  System vendor OID
+    [[inputs.snmp.field]]
+      name = "sysObjectID"
+      oid = "RFC1213-MIB::sysObjectID.0"
+    #  System description
+    [[inputs.snmp.field]]
+      name = "sysDescr"
+      oid = "RFC1213-MIB::sysDescr.0"
+    #  System contact
+    [[inputs.snmp.field]]
+      name = "sysContact"
+      oid = "RFC1213-MIB::sysContact.0"
+    #  System location
+    [[inputs.snmp.field]]
+      name = "sysLocation"
+      oid = "RFC1213-MIB::sysLocation.0"
+    #  System uptime
+    [[inputs.snmp.field]]
+      name = "sysUpTime"
+      oid = "RFC1213-MIB::sysUpTime.0"
+    ######################################################
+    ## PowerNet-MIB Metrics
+    # The UPS model name (e.g. 'APC Smart-UPS 600'). 
+    [[inputs.snmp.field]]
+      name = "upsBasicIdentModel"
+      oid = "PowerNet-MIB::upsBasicIdentModel.0"
+    # An 8 byte ID string identifying the UPS. This object can be set by the administrator. 
+    [[inputs.snmp.field]]
+      name = "upsBasicIde``ntName"
+      oid = "PowerNet-MIB::upsBasicIdentName.0"
+    # The firmware revision of the UPS system's microprocessor.
+    [[inputs.snmp.field]]
+      name = "upsAdvIdentFirmwareRevision"
+      oid = "PowerNet-MIB::upsAdvIdentFirmwareRevision.0"
+    # The date when the UPS was manufactured in mm/dd/yy format.
+    [[inputs.snmp.field]]
+      name = "upsAdvIdentDateOfManufacture"
+      oid = "PowerNet-MIB::upsAdvIdentDateOfManufacture.0"
+    # An 8-character string identifying the serial number of the UPS internal microprocessor. This number is set at the factory.
+    [[inputs.snmp.field]]
+      name = "upsAdvIdentSerialNumber"
+      oid = "PowerNet-MIB::upsAdvIdentSerialNumber.0"
+    # The SKU number of a UPS system.
+    [[inputs.snmp.field]]
+      name = "upsAdvIdentSkuNumber"
+      oid = "PowerNet-MIB::upsAdvIdentSkuNumber.0"
+    # The status of the UPS batteries.
+    [[inputs.snmp.field]]
+      name = "upsBasicBatteryStatus"
+      oid = "PowerNet-MIB::upsBasicBatteryStatus.0"
+    #The elapsed time since the UPS has switched to battery power.
+    [[inputs.snmp.field]]
+      name = "upsBasicBatteryTimeOnBattery"
+      oid = "PowerNet-MIB::upsBasicBatteryTimeOnBattery.0"
+    # The date when the UPS system's batteries were last replaced in mm/dd/yy format.
+    [[inputs.snmp.field]]
+      name = "upsBasicBatteryLastReplaceDate"
+      oid = "PowerNet-MIB::upsBasicBatteryLastReplaceDate.0"
+    #The remaining battery capacity expressed in percent of full capacity.
+    [[inputs.snmp.field]]
+      name = "upsAdvBatteryCapacity"
+      oid = "PowerNet-MIB::upsAdvBatteryCapacity.0"
+    # The current internal UPS temperature expressed in Celsius.
+    [[inputs.snmp.field]]
+      name = "upsAdvBatteryTemperature"
+      oid = "PowerNet-MIB::upsAdvBatteryTemperature.0"
+    # The UPS battery run time remaining before battery exhaustion.
+    [[inputs.snmp.field]]
+      name = "upsAdvBatteryRunTimeRemaining"
+      oid = "PowerNet-MIB::upsAdvBatteryRunTimeRemaining.0"
+    # Indicates whether the UPS batteries need replacing.
+    [[inputs.snmp.field]]
+      name = "upsAdvBatteryReplaceIndicator"
+      oid = "PowerNet-MIB::upsAdvBatteryReplaceIndicator.0"
+    # The actual battery bus voltage in Volts.
+    [[inputs.snmp.field]]
+      name = "upsAdvBatteryActualVoltage"
+      oid = "PowerNet-MIB::upsAdvBatteryActualVoltage.0"
+    # The SKU of the internal battery.
+    [[inputs.snmp.field]]
+      name = "upsAdvBatteryInternalSKU"
+      oid = "PowerNet-MIB::upsAdvBatteryInternalSKU.0"
+    # The current utility line voltage in VAC
+    [[inputs.snmp.field]]
+      name = "upsAdvInputLineVoltage"
+      oid = "PowerNet-MIB::upsAdvInputLineVoltage.0"
+    # The current input frequency to the UPS system in Hz.
+    [[inputs.snmp.field]]
+      name = "upsAdvInputFrequency"
+      oid = "PowerNet-MIB::upsAdvInputFrequency.0"
+    # The reason for the occurrence of the last transfer to UPS battery power.
+    [[inputs.snmp.field]]
+      name = "upsAdvInputLineFailCause"
+      oid = "PowerNet-MIB::upsAdvInputLineFailCause.0"
+    # The current state of the UPS.
+    [[inputs.snmp.field]]
+      name = "upsBasicOutputStatus"
+      oid = "PowerNet-MIB::upsBasicOutputStatus.0"
+    # The output voltage of the UPS system in VAC.
+    [[inputs.snmp.field]]
+      name = "upsAdvOutputVoltage"
+      oid = "PowerNet-MIB::upsAdvOutputVoltage.0"
+    # The current output frequency of the UPS system in Hz.
+    [[inputs.snmp.field]]
+      name = "upsAdvOutputFrequency"
+      oid = "PowerNet-MIB::upsAdvOutputFrequency.0"
+    # The current UPS load expressed in percent of rated capacity.
+    [[inputs.snmp.field]]
+      name = "upsAdvOutputLoad"
+      oid = "PowerNet-MIB::upsAdvOutputLoad.0"
+    # The total output active power of the UPS system in W.
+    [[inputs.snmp.field]]
+      name = "upsAdvOutputActivePower"
+      oid = "PowerNet-MIB::upsAdvOutputActivePower.0"
+    # The total output apparent power of all phases of the UPS system in VA.
+    [[inputs.snmp.field]]
+      name = "upsAdvOutputApparentPower"
+      oid = "PowerNet-MIB::upsAdvOutputApparentPower.0"
+    # The current in tenths of amperes drawn by the load on the UPS.
+    [[inputs.snmp.field]]
+      name = "upsHighPrecOutputCurrent"
+      oid = "PowerNet-MIB::upsHighPrecOutputCurrent.0"
+    # The desired run time of the UPS, in seconds, once the low battery condition is reached.
+    [[inputs.snmp.field]]
+      name = "upsAdvConfigLowBatteryRunTime"
+      oid = "PowerNet-MIB::upsAdvConfigLowBatteryRunTime.0"
+    # The UPS system's automatic battery test schedule.
+    [[inputs.snmp.field]]
+      name = "upsAdvTestDiagnosticSchedule"
+      oid = "PowerNet-MIB::upsAdvTestDiagnosticSchedule.0"
+    # The results of the last UPS diagnostics test performed.
+    [[inputs.snmp.field]]
+      name = "upsAdvTestDiagnosticsResults"
+      oid = "PowerNet-MIB::upsAdvTestDiagnosticsResults.0"
+    ######################################################
+---
+# Deployment Configuration
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apc-telegraf
+  namespace: apc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apc-telegraf
+  template:
+    metadata:
+      labels:
+        app: apc-telegraf
+    spec:
+      volumes:
+      - name: apc-ups-telegraf-config
+        configMap:
+          defaultMode: 0600
+          name: cm-apc-ups-telegraf-config
+      containers:
+      - name: apc-telegraf
+        image: telegraf:alpine
+        command: ["/bin/sh", "-c"]
+        args: [
+          "wget 'https://download.schneider-electric.com/files?p_enDocType=Firmware+-+Released&p_Doc_Ref=APC_POWERNETMIB_432&p_File_Name=powernet432.mib' -O /usr/share/snmp/mibs/PowerNet-MIB.txt; telegraf",
+        ]
+        volumeMounts:
+          - name: apc-ups-telegraf-config
+            mountPath: /etc/telegraf/telegraf.conf
+            subPath: telegraf-apc-ups.conf
+            readOnly: true
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "100m"
+          limits:
+            memory: "64Mi"
+            cpu: "200m"
+---
