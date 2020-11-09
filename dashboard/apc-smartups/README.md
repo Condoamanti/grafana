@@ -9,6 +9,8 @@ Grafana dashboard configuration for UPS-SmartUPS metrics
     - Firmware UPS 08.3(ID18)+
 5. UPS Network Management Card 2 (AP9630)
     - SNMP Enabled
+6. PowerNet-MIB
+    - https://download.schneider-electric.com/files?p_enDocType=Firmware+-+Released&p_Doc_Ref=APC_POWERNETMIB_432&p_File_Name=powernet432.mib
 
 ### ***Metrics Captured:***
 - upsBasicIdentModel
