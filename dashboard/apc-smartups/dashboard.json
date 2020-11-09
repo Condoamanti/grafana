@@ -1,4 +1,55 @@
 {
+  "__inputs": [],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "bargauge",
+      "name": "Bar gauge",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "gauge",
+      "name": "Gauge",
+      "version": ""
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "7.1.0"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "influxdb",
+      "name": "InfluxDB",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "text",
+      "name": "Text",
+      "version": "7.1.0"
+    }
+  ],
   "annotations": {
     "list": [
       {
@@ -16,8 +67,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 2,
-  "id": 29,
-  "iteration": 1604899549589,
+  "id": null,
+  "iteration": 1604899549590,
   "links": [],
   "panels": [
     {
@@ -3243,11 +3294,7 @@
       },
       {
         "allValue": null,
-        "current": {
-          "selected": true,
-          "text": "ups1dc1.domain.local",
-          "value": "ups1dc1.domain.local"
-        },
+        "current": {},
         "datasource": "$datasource",
         "definition": "SHOW TAG VALUES FROM \"snmp.UPS\" WITH KEY = \"agent_host\"",
         "hide": 0,
@@ -3255,15 +3302,9 @@
         "label": "Host",
         "multi": false,
         "name": "host",
-        "options": [
-          {
-            "selected": true,
-            "text": "ups1dc1.domain.local",
-            "value": "ups1dc1.domain.local"
-          }
-        ],
+        "options": [],
         "query": "SHOW TAG VALUES FROM \"snmp.UPS\" WITH KEY = \"agent_host\"",
-        "refresh": 0,
+        "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,

@@ -6,9 +6,9 @@ Grafana dashboard configuration for UPS-SmartUPS metrics
 2. InfluxDB 1.8.3+
 3. Telegraf 1.16.1+
 4. APC Smart-UPS (SMT1500R2X180)
-  - UPS Network Management Card 2 (AP9630)
+    - Firmware UPS 08.3(ID18)+
+5. UPS Network Management Card 2 (AP9630)
     - SNMP Enabled
-  - Firmware UPS 08.3(ID18)+
 
 ### ***Metrics Captured:***
 - upsBasicIdentModel
@@ -62,7 +62,7 @@ Grafana dashboard configuration for UPS-SmartUPS metrics
 
 ### ***Collector Output Configuration:***
 #### Reference the outputs.influxdb in the kubernetes deployment
-- [/kubernetes//deployment.yml](https://github.com/Condoamanti/grafana/blob/master/dashboard/apc-smartups/kubernetes/deployment.yml)
+- [/kubernetes/deployment.yml](https://github.com/Condoamanti/grafana/blob/master/dashboard/apc-smartups/kubernetes/deployment.yaml)
 ```
   [[outputs.influxdb]]
       urls = ["my-influxdb.example.com:8086"]
@@ -72,7 +72,7 @@ Grafana dashboard configuration for UPS-SmartUPS metrics
 ```
 ### ***Collector Input Configuration:***
 #### reference inputs.snmp in the kubernetes deployment
-- [/kubernetes//deployment.yml](https://github.com/Condoamanti/grafana/blob/master/dashboard/apc-smartups/kubernetes/deployment.yml)
+- [/kubernetes/deployment.yml](https://github.com/Condoamanti/grafana/blob/master/dashboard/apc-smartups/kubernetes/deployment.yaml)
 ```
   [[inputs.snmp]]
     # List of agents to poll
