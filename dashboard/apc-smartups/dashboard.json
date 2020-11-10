@@ -68,7 +68,7 @@
   "gnetId": null,
   "graphTooltip": 2,
   "id": null,
-  "iteration": 1604899549590,
+  "iteration": 1605023422865,
   "links": [],
   "panels": [
     {
@@ -509,7 +509,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "agent_host",
+              "operator": "=~",
+              "value": "/^$host$/"
+            }
+          ]
         }
       ],
       "timeFrom": null,
@@ -3073,7 +3079,13 @@
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "agent_host",
+              "operator": "=~",
+              "value": "/^$host$/"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -3334,7 +3346,7 @@
     ]
   },
   "timezone": "",
-  "title": "APC SmartUPS Dashboard",
+  "title": "APC SmartUPS Dashboard (13365)",
   "uid": "mleZBL2Gz",
-  "version": 69
+  "version": 71
 }
