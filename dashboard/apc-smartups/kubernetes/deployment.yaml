@@ -16,7 +16,7 @@ data:
       round_interval = true
     ######################################################
     [[outputs.influxdb]]
-        urls = ["my-influxdb.example.com:8086"]
+        urls = ["https://my-influxdb.example.com"]
         database = "apc-smartups"
         insecure_skip_verify = true
         #ssl_ca = "/usr/local/etc/telegraf.ca"

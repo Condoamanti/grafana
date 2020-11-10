@@ -68,7 +68,7 @@
   "gnetId": null,
   "graphTooltip": 2,
   "id": null,
-  "iteration": 1605023422865,
+  "iteration": 1605023422883,
   "links": [],
   "panels": [
     {
@@ -117,12 +117,7 @@
       "id": 4,
       "options": {
         "showHeader": true,
-        "sortBy": [
-          {
-            "desc": false,
-            "displayName": "Firmware"
-          }
-        ]
+        "sortBy": []
       },
       "pluginVersion": "7.1.0",
       "targets": [
@@ -147,10 +142,6 @@
                   "upsBasicIdentModel"
                 ],
                 "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
               },
               {
                 "params": [
@@ -249,6 +240,10 @@
                   "upsAdvBatteryInternalSKU"
                 ],
                 "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
               },
               {
                 "params": [
@@ -2967,15 +2962,17 @@
     },
     {
       "aliasColors": {},
-      "bars": false,
+      "bars": true,
       "dashLength": 10,
       "dashes": false,
       "datasource": "$datasource",
-      "decimals": 0,
-      "description": "The current internal UPS temperature expressed in\nCelsius.",
+      "decimals": 2,
+      "description": "The total output active power of the UPS system in W. The total active power is the sum of phase 1, phase 2 and phase 3 power. ",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
+          "custom": {
+            "align": null
+          },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -3002,20 +2999,24 @@
         "y": 31
       },
       "hiddenSeries": false,
-      "id": 8,
+      "hideTimeOverride": false,
+      "id": 46,
+      "interval": "1d",
       "legend": {
         "alignAsTable": true,
-        "avg": false,
+        "avg": true,
         "current": true,
+        "hideEmpty": false,
+        "hideZero": false,
         "max": true,
         "min": true,
         "show": true,
         "total": false,
         "values": true
       },
-      "lines": true,
+      "lines": false,
       "linewidth": 1,
-      "nullPointMode": "null",
+      "nullPointMode": "connected",
       "percentage": false,
       "pluginVersion": "7.1.0",
       "pointradius": 2,
@@ -3043,12 +3044,6 @@
             },
             {
               "params": [
-                "agent_host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
                 "none"
               ],
               "type": "fill"
@@ -3057,13 +3052,13 @@
           "measurement": "snmp.UPS",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "B",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "upsAdvBatteryTemperature"
+                  "upsAdvOutputActivePower"
                 ],
                 "type": "field"
               },
@@ -3073,7 +3068,7 @@
               },
               {
                 "params": [
-                  "* 9/5 + 32"
+                  " / 100"
                 ],
                 "type": "math"
               }
@@ -3089,10 +3084,10 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
+      "timeFrom": "1M",
       "timeRegions": [],
       "timeShift": null,
-      "title": "Temperature",
+      "title": "Power Usage",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -3108,16 +3103,17 @@
       },
       "yaxes": [
         {
-          "decimals": 0,
-          "format": "fahrenheit",
-          "label": "Degree",
+          "decimals": 2,
+          "format": "kwatth",
+          "label": "Kilowatt-hour",
           "logBase": 1,
           "max": null,
-          "min": "0",
+          "min": null,
           "show": true
         },
         {
-          "format": "fahrenheit",
+          "decimals": null,
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -3126,7 +3122,7 @@
         }
       ],
       "yaxis": {
-        "align": true,
+        "align": false,
         "alignLevel": null
       }
     },
@@ -3273,6 +3269,171 @@
         "align": false,
         "alignLevel": null
       }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$datasource",
+      "decimals": 0,
+      "description": "The current internal UPS temperature expressed in\nCelsius.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 39
+      },
+      "hiddenSeries": false,
+      "id": 8,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "percentage": false,
+      "pluginVersion": "7.1.0",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$tag_agent_host",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "agent_host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "agent_host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "snmp.UPS",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "upsAdvBatteryTemperature"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              },
+              {
+                "params": [
+                  "* 9/5 + 32"
+                ],
+                "type": "math"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "agent_host",
+              "operator": "=~",
+              "value": "/^$host$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Temperature",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 0,
+          "format": "fahrenheit",
+          "label": "Degree",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "fahrenheit",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": true,
+        "alignLevel": null
+      }
     }
   ],
   "refresh": "30s",
@@ -3348,5 +3509,5 @@
   "timezone": "",
   "title": "APC SmartUPS Dashboard (13365)",
   "uid": "mleZBL2Gz",
-  "version": 71
+  "version": 72
 }
