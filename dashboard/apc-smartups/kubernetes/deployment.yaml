@@ -76,7 +76,7 @@ data:
       oid = "PowerNet-MIB::upsBasicIdentModel.0"
     # An 8 byte ID string identifying the UPS. This object can be set by the administrator. 
     [[inputs.snmp.field]]
-      name = "upsBasicIde``ntName"
+      name = "upsBasicIdentName"
       oid = "PowerNet-MIB::upsBasicIdentName.0"
     # The firmware revision of the UPS system's microprocessor.
     [[inputs.snmp.field]]
