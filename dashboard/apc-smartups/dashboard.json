@@ -68,7 +68,7 @@
   "gnetId": null,
   "graphTooltip": 2,
   "id": null,
-  "iteration": 1605023422883,
+  "iteration": 1605026780718,
   "links": [],
   "panels": [
     {
@@ -3507,7 +3507,7 @@
     ]
   },
   "timezone": "",
-  "title": "APC SmartUPS Dashboard (13365)",
+  "title": "APC SmartUPS Dashboard",
   "uid": "mleZBL2Gz",
-  "version": 72
+  "version": 75
 }
