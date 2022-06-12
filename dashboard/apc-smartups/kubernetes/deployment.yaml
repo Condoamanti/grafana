@@ -7,6 +7,7 @@ metadata:
   namespace: apc
   labels:
     app: apc-telegraf
+    app.kubernetes.io/instance: apc
 data:
   telegraf-apc-ups.conf: |-
     # Telegraf Configuration
@@ -16,10 +17,12 @@ data:
       round_interval = true
     ######################################################
     [[outputs.influxdb]]
-        urls = ["https://my-influxdb.example.com"]
+        urls = ["https://influxdb.jittersolutions.com"]
         database = "apc-smartups"
+        #retention_policy = "7d"
+        write_consistency = "any"
+        timeout = "5s"
         insecure_skip_verify = true
-        #ssl_ca = "/usr/local/etc/telegraf.ca"
     ######################################################
     ## INPUT CONFIGURATION
     ### Retrieves details via SNMP from APC Smart-UPS (SMT1500R2X180)
@@ -28,7 +31,7 @@ data:
     ######################################################
     [[inputs.snmp]]
       # List of agents to poll
-      agents = ["my-apc-smartups.example.com"]
+      agents = ["ups1dc1.domain.local"]
       # Polling interval
       interval = "60s"
       # Timeout for each SNMP query.
@@ -190,6 +193,8 @@ kind: Deployment
 metadata:
   name: apc-telegraf
   namespace: apc
+  labels:
+    app.kubernetes.io/instance: apc
 spec:
   replicas: 1
   selector:
@@ -207,11 +212,9 @@ spec:
           name: cm-apc-ups-telegraf-config
       containers:
       - name: apc-telegraf
-        image: telegraf:alpine
-        command: ["/bin/sh", "-c"]
-        args: [
-          "wget 'https://download.schneider-electric.com/files?p_enDocType=Firmware+-+Released&p_Doc_Ref=APC_POWERNETMIB_432&p_File_Name=powernet432.mib' -O /usr/share/snmp/mibs/PowerNet-MIB.txt; telegraf",
-        ]
+        image: docker.io/telegraf:1.22
+        command: ["/bin/sh"]
+        args: ["-c", "wget --quiet 'http://www.circitor.fr/Mibs/Mib/R/RFC1213-MIB.mib' -O /usr/share/snmp/mibs/RFC1213-MIB.txt;wget --quiet 'https://download.schneider-electric.com/files?p_enDocType=Firmware&p_File_Name=powernet441.mib&p_Doc_Ref=APC_POWERNETMIB_441_EN&_ga=2.1327155.308134662.1655066635-1868855171.1655066635' -O /usr/share/snmp/mibs/PowerNet-MIB.txt;wget --quiet 'http://www.circitor.fr/Mibs/Mib/S/SNMPv2-SMI.mib' -O /usr/share/snmp/mibs/SNMPv2-SMI.txt;telegraf"]
         volumeMounts:
           - name: apc-ups-telegraf-config
             mountPath: /etc/telegraf/telegraf.conf
@@ -220,8 +223,8 @@ spec:
         resources:
           requests:
             memory: "32Mi"
-            cpu: "100m"
+            cpu: "50m"
           limits:
             memory: "64Mi"
-            cpu: "200m"
+            cpu: "100m"
 ---

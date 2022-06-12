@@ -17,12 +17,12 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "7.1.0"
+      "version": "8.2.0-33922pre"
     },
     {
       "type": "panel",
       "id": "graph",
-      "name": "Graph",
+      "name": "Graph (old)",
       "version": ""
     },
     {
@@ -47,7 +47,7 @@
       "type": "panel",
       "id": "text",
       "name": "Text",
-      "version": "7.1.0"
+      "version": ""
     }
   ],
   "annotations": {
@@ -59,24 +59,32 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "description": "Dashboard to display metrics relating to APC Smart-UPS devices",
   "editable": true,
-  "gnetId": null,
+  "gnetId": 13365,
   "graphTooltip": 2,
   "id": null,
-  "iteration": 1605026780718,
+  "iteration": 1655068461548,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": null
+            "align": null,
+            "displayMode": "auto"
           },
           "mappings": [],
           "thresholds": {
@@ -119,7 +127,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "targets": [
         {
           "groupBy": [
@@ -269,12 +277,6 @@
     },
     {
       "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "gridPos": {
         "h": 4,
         "w": 2,
@@ -286,12 +288,11 @@
         "content": "<p style=\"text-align:center; vertical-align: middle;\">\r\n<img src=\"https://github.com/Condoamanti/grafana/blob/master/dashboard/apc-smartups/Logo.png?raw=true\" style=\"background-color:white\" height=\"125\" alt=\"APC\"/>\r\n</p>",
         "mode": "html"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "repeat": null,
       "repeatDirection": "h",
       "timeFrom": null,
       "timeShift": null,
-      "title": "",
       "type": "text"
     },
     {
@@ -299,16 +300,16 @@
       "description": "The time seconds since the network management portion of the system was last re-initialized.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 2,
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "N/A",
-              "to": "",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -351,9 +352,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "targets": [
         {
           "groupBy": [],
@@ -403,7 +405,6 @@
       "description": "The current internal UPS temperature expressed in\nCelsius.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 0,
           "mappings": [],
           "max": 89.6,
@@ -445,9 +446,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "text": {}
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "targets": [
         {
           "alias": "$tag_agent_host (fahrenheit)",
@@ -523,7 +525,6 @@
       "description": "The current UPS load expressed in percent\nof rated capacity.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 0,
           "mappings": [],
           "max": 100,
@@ -565,9 +566,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "text": {}
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "targets": [
         {
           "alias": "$tag_agent_host",
@@ -629,7 +631,6 @@
       "description": "The remaining battery capacity expressed in\npercent of full capacity.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 0,
           "mappings": [],
           "max": 100,
@@ -673,9 +674,10 @@
           "fields": "",
           "values": false
         },
-        "showUnfilled": true
+        "showUnfilled": true,
+        "text": {}
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "targets": [
         {
           "alias": "$tag_agent_host",
@@ -731,24 +733,25 @@
       "description": "The elapsed time since the UPS has switched to battery power in seconds.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 0,
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "N/A",
-              "to": "",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "0": {
+                  "color": "green",
+                  "text": "0"
+                }
+              },
+              "type": "value"
             },
             {
-              "from": "",
-              "id": 1,
-              "text": "0",
-              "to": "",
-              "type": 1,
-              "value": "0"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -787,9 +790,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "targets": [
         {
           "alias": "",
@@ -851,95 +855,50 @@
       "description": "The reason for the occurrence of the last transfer to UPS battery power.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "N/A",
-              "to": "",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "1": {
+                  "text": "noTransfer"
+                },
+                "2": {
+                  "text": "highLineVoltage"
+                },
+                "3": {
+                  "text": "brownout"
+                },
+                "4": {
+                  "text": "blackout"
+                },
+                "5": {
+                  "text": "smallMomentarySag"
+                },
+                "6": {
+                  "text": "deepMomentarySag"
+                },
+                "7": {
+                  "text": "smallMomentarySpike"
+                },
+                "8": {
+                  "text": "largeMomentarySpike"
+                },
+                "9": {
+                  "text": "selfTest"
+                },
+                "10": {
+                  "text": "rateOfVoltageChange"
+                }
+              },
+              "type": "value"
             },
             {
-              "from": "",
-              "id": 1,
-              "text": "noTransfer",
-              "to": "",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "from": "",
-              "id": 2,
-              "text": "highLineVoltage",
-              "to": "",
-              "type": 1,
-              "value": "2"
-            },
-            {
-              "from": "",
-              "id": 3,
-              "text": "brownout",
-              "to": "",
-              "type": 1,
-              "value": "3"
-            },
-            {
-              "from": "",
-              "id": 4,
-              "text": "blackout",
-              "to": "",
-              "type": 1,
-              "value": "4"
-            },
-            {
-              "from": "",
-              "id": 5,
-              "text": "smallMomentarySag",
-              "to": "",
-              "type": 1,
-              "value": "5"
-            },
-            {
-              "from": "",
-              "id": 6,
-              "text": "deepMomentarySag",
-              "to": "",
-              "type": 1,
-              "value": "6"
-            },
-            {
-              "from": "",
-              "id": 7,
-              "text": "smallMomentarySpike",
-              "to": "",
-              "type": 1,
-              "value": "7"
-            },
-            {
-              "from": "",
-              "id": 8,
-              "text": "largeMomentarySpike",
-              "to": "",
-              "type": 1,
-              "value": "8"
-            },
-            {
-              "from": "",
-              "id": 9,
-              "text": "selfTest",
-              "to": "",
-              "type": 1,
-              "value": "9"
-            },
-            {
-              "from": "",
-              "id": 10,
-              "text": "rateOfVoltageChange",
-              "to": "",
-              "type": 1,
-              "value": "10"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -974,9 +933,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "targets": [
         {
           "alias": "",
@@ -1032,31 +992,26 @@
       "description": "Indicates whether the UPS batteries need replacing.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "noBatteryNeedsReplacing",
-              "to": "",
-              "type": 1,
-              "value": "1"
+              "options": {
+                "1": {
+                  "text": "noBatteryNeedsReplacing"
+                },
+                "2": {
+                  "text": "batteryNeedsReplacing"
+                }
+              },
+              "type": "value"
             },
             {
-              "from": "",
-              "id": 1,
-              "text": "batteryNeedsReplacing",
-              "to": "",
-              "type": 1,
-              "value": "2"
-            },
-            {
-              "from": "",
-              "id": 2,
-              "text": "N/A",
-              "to": "",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -1098,9 +1053,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "targets": [
         {
           "groupBy": [
@@ -1155,16 +1111,16 @@
       "description": "The UPS battery run time remaining before battery exhaustion.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 0,
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "N/A",
-              "to": "",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -1207,9 +1163,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "targets": [
         {
           "groupBy": [
@@ -1270,103 +1227,47 @@
       "description": "The current state of the UPS. If the UPS is unable to determine the state of the UPS this variable is set to unknown.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "unknown",
-              "to": "",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "from": "",
-              "id": 1,
-              "text": "onLine",
-              "to": "",
-              "type": 1,
-              "value": "2"
-            },
-            {
-              "from": "",
-              "id": 2,
-              "text": "onBattery",
-              "to": "",
-              "type": 1,
-              "value": "3"
-            },
-            {
-              "from": "",
-              "id": 3,
-              "text": "onSmartBoost",
-              "to": "",
-              "type": 1,
-              "value": "4"
-            },
-            {
-              "from": "",
-              "id": 4,
-              "text": "timedSleeping",
-              "to": "",
-              "type": 1,
-              "value": "5"
-            },
-            {
-              "from": "",
-              "id": 5,
-              "text": "softwareBypass",
-              "to": "",
-              "type": 1,
-              "value": "6"
-            },
-            {
-              "from": "",
-              "id": 6,
-              "text": "off",
-              "to": "",
-              "type": 1,
-              "value": "7"
-            },
-            {
-              "from": "",
-              "id": 7,
-              "text": "rebooting",
-              "to": "",
-              "type": 1,
-              "value": "8"
-            },
-            {
-              "from": "",
-              "id": 8,
-              "text": "switchedBypass",
-              "to": "",
-              "type": 1,
-              "value": "9"
-            },
-            {
-              "from": "",
-              "id": 9,
-              "text": "hardwareFailureBypass",
-              "to": "",
-              "type": 1,
-              "value": "10"
-            },
-            {
-              "from": "",
-              "id": 10,
-              "text": "sleepingUntilPowerReturn",
-              "to": "",
-              "type": 1,
-              "value": "11"
-            },
-            {
-              "from": "",
-              "id": 11,
-              "text": "onSmartTrim",
-              "to": "",
-              "type": 1,
-              "value": "12"
+              "options": {
+                "1": {
+                  "text": "unknown"
+                },
+                "2": {
+                  "text": "onLine"
+                },
+                "3": {
+                  "text": "onBattery"
+                },
+                "4": {
+                  "text": "onSmartBoost"
+                },
+                "5": {
+                  "text": "timedSleeping"
+                },
+                "6": {
+                  "text": "softwareBypass"
+                },
+                "7": {
+                  "text": "off"
+                },
+                "8": {
+                  "text": "rebooting"
+                },
+                "9": {
+                  "text": "switchedBypass"
+                },
+                "10": {
+                  "text": "hardwareFailureBypass"
+                },
+                "11": {
+                  "text": "sleepingUntilPowerReturn"
+                },
+                "12": {
+                  "text": "onSmartTrim"
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -1408,9 +1309,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "targets": [
         {
           "groupBy": [
@@ -1465,39 +1367,23 @@
       "description": "The results of the last UPS diagnostics test performed. ",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "ok",
-              "to": "",
-              "type": 1,
-              "value": "1"
-            },
-            {
-              "from": "",
-              "id": 1,
-              "text": "failed",
-              "to": "",
-              "type": 1,
-              "value": "2"
-            },
-            {
-              "from": "",
-              "id": 2,
-              "text": "invalidTest",
-              "to": "",
-              "type": 1,
-              "value": "3"
-            },
-            {
-              "from": "",
-              "id": 3,
-              "text": "testInProgress",
-              "to": "",
-              "type": 1,
-              "value": "4"
+              "options": {
+                "1": {
+                  "text": "ok"
+                },
+                "2": {
+                  "text": "failed"
+                },
+                "3": {
+                  "text": "invalidTest"
+                },
+                "4": {
+                  "text": "testInProgress"
+                }
+              },
+              "type": "value"
             }
           ],
           "thresholds": {
@@ -1535,9 +1421,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "targets": [
         {
           "groupBy": [
@@ -1592,87 +1479,47 @@
       "description": "The UPS system's automatic battery test schedule. ",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "mappings": [
             {
-              "from": "",
-              "id": 0,
-              "text": "unknown",
-              "to": "",
-              "type": 1,
-              "value": "1"
+              "options": {
+                "1": {
+                  "text": "unknown"
+                },
+                "2": {
+                  "text": "biweekly"
+                },
+                "3": {
+                  "text": "weekly"
+                },
+                "4": {
+                  "text": "atTurnOn"
+                },
+                "5": {
+                  "text": "never"
+                },
+                "6": {
+                  "text": "fourWeeks"
+                },
+                "7": {
+                  "text": "twelveWeeks"
+                },
+                "8": {
+                  "text": "biweeklySinceLastTest"
+                },
+                "9": {
+                  "text": "weeklySinceLastTest"
+                }
+              },
+              "type": "value"
             },
             {
-              "from": "",
-              "id": 1,
-              "text": "biweekly",
-              "to": "",
-              "type": 1,
-              "value": "2"
-            },
-            {
-              "from": "",
-              "id": 2,
-              "text": "weekly",
-              "to": "",
-              "type": 1,
-              "value": "3"
-            },
-            {
-              "from": "",
-              "id": 3,
-              "text": "atTurnOn",
-              "to": "",
-              "type": 1,
-              "value": "4"
-            },
-            {
-              "from": "",
-              "id": 4,
-              "text": "never",
-              "to": "",
-              "type": 1,
-              "value": "5"
-            },
-            {
-              "from": "",
-              "id": 5,
-              "text": "fourWeeks",
-              "to": "",
-              "type": 1,
-              "value": "6"
-            },
-            {
-              "from": "",
-              "id": 6,
-              "text": "twelveWeeks",
-              "to": "",
-              "type": 1,
-              "value": "7"
-            },
-            {
-              "from": "",
-              "id": 7,
-              "text": "biweeklySinceLastTest",
-              "to": "",
-              "type": 1,
-              "value": "8"
-            },
-            {
-              "from": "",
-              "id": 8,
-              "text": "weeklySinceLastTest",
-              "to": "",
-              "type": 1,
-              "value": "9"
-            },
-            {
-              "from": "",
-              "id": 9,
-              "text": "N/A",
-              "to": "",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -1718,9 +1565,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "targets": [
         {
           "groupBy": [
@@ -1778,26 +1626,6 @@
       "datasource": "$datasource",
       "decimals": 0,
       "description": "The remaining battery capacity expressed in\npercent of full capacity.",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1821,8 +1649,11 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1931,26 +1762,6 @@
       "datasource": "$datasource",
       "decimals": 2,
       "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -1974,8 +1785,11 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2133,12 +1947,6 @@
       "datasource": "$datasource",
       "decimals": 0,
       "description": "The current UPS load expressed in percent\nof rated capacity.",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -2162,8 +1970,11 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2272,12 +2083,6 @@
       "datasource": "$datasource",
       "decimals": 0,
       "description": "The total output active power of the UPS system in W. The total active power is the sum of phase 1, phase 2 and phase 3 power. ",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -2303,8 +2108,11 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2462,12 +2270,6 @@
       "datasource": "$datasource",
       "decimals": 0,
       "description": "The current utility line voltage in VAC.",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -2492,8 +2294,11 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2663,28 +2468,6 @@
       "datasource": "$datasource",
       "decimals": 2,
       "description": "The total output active power of the UPS system in W. The total active power is the sum of phase 1, phase 2 and phase 3 power. ",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": null
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -2712,8 +2495,11 @@
       "lines": false,
       "linewidth": 1,
       "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2763,7 +2549,7 @@
               },
               {
                 "params": [
-                  " / 100"
+                  " / 1000"
                 ],
                 "type": "math"
               }
@@ -2829,12 +2615,6 @@
       "datasource": "$datasource",
       "decimals": 2,
       "description": "The actual battery bus voltage in Volts.",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -2858,8 +2638,11 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -2968,28 +2751,6 @@
       "datasource": "$datasource",
       "decimals": 2,
       "description": "The total output active power of the UPS system in W. The total active power is the sum of phase 1, phase 2 and phase 3 power. ",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": null
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -3017,8 +2778,11 @@
       "lines": false,
       "linewidth": 1,
       "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -3068,7 +2832,7 @@
               },
               {
                 "params": [
-                  " / 100"
+                  " / 1000"
                 ],
                 "type": "math"
               }
@@ -3133,12 +2897,6 @@
       "dashes": false,
       "datasource": "$datasource",
       "description": "The current in ampres drawn by the load on the UPS.",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -3162,8 +2920,11 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -3278,26 +3039,6 @@
       "datasource": "$datasource",
       "decimals": 0,
       "description": "The current internal UPS temperature expressed in\nCelsius.",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -3321,8 +3062,11 @@
       "lines": true,
       "linewidth": 1,
       "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
-      "pluginVersion": "7.1.0",
+      "pluginVersion": "8.2.0-33922pre",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -3437,7 +3181,7 @@
     }
   ],
   "refresh": "30s",
-  "schemaVersion": 26,
+  "schemaVersion": 31,
   "style": "dark",
   "tags": [
     "telegraf",
@@ -3448,10 +3192,12 @@
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "InfluxDB-apc-smartups",
           "value": "InfluxDB-apc-smartups"
         },
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "dataSource",
@@ -3470,6 +3216,8 @@
         "current": {},
         "datasource": "$datasource",
         "definition": "SHOW TAG VALUES FROM \"snmp.UPS\" WITH KEY = \"agent_host\"",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Host",
@@ -3482,7 +3230,6 @@
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -3509,5 +3256,5 @@
   "timezone": "",
   "title": "APC SmartUPS Dashboard",
   "uid": "mleZBL2Gz",
-  "version": 75
+  "version": 2
 }
