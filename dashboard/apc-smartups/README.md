@@ -2,15 +2,15 @@
 Grafana dashboard configuration for UPS-SmartUPS metrics
 
 ### ***Requirements:***
-1. Grafana 7.1.0+
-2. InfluxDB 1.8.3+
-3. Telegraf 1.16.1+
+1. Grafana 8.5.5+
+2. InfluxDB 1.8+
+3. Telegraf 1.22+
 4. APC Smart-UPS (SMT1500R2X180)
     - Firmware UPS 08.3(ID18)+
 5. UPS Network Management Card 2 (AP9630)
     - SNMP Enabled
 6. PowerNet-MIB
-    - [https://download.schneider-electric.com/files?p_enDocType=Firmware+-+Released&p_Doc_Ref=APC_POWERNETMIB_432&p_File_Name=powernet432.mib](https://download.schneider-electric.com/files?p_enDocType=Firmware+-+Released&p_Doc_Ref=APC_POWERNETMIB_432&p_File_Name=powernet432.mib)
+    - [https://download.schneider-electric.com/files?p_enDocType=Firmware&p_File_Name=powernet441.mib&p_Doc_Ref=APC_POWERNETMIB_441_EN&_ga=2.1327155.308134662.1655066635-1868855171.1655066635](https://download.schneider-electric.com/files?p_enDocType=Firmware&p_File_Name=powernet441.mib&p_Doc_Ref=APC_POWERNETMIB_441_EN&_ga=2.1327155.308134662.1655066635-1868855171.1655066635)
 
 ### ***Metrics Captured:***
 - upsBasicIdentModel
